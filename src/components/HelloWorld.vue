@@ -111,15 +111,49 @@
 </template>
 
 <script lang="ts">
+import { PropType } from "vue";
 import { Options, Vue } from "vue-class-component";
+
+interface PersonInterface {
+  id: number;
+  name: string;
+  gender: "male" | "female" | "unknown";
+}
+
+type PersonType = {
+  id: number;
+  name: string;
+  gender: "male" | "female" | "unknown";
+};
+
+/**
+ * type和interface有什么不一样的吗
+ */
 
 @Options({
   props: {
-    msg: String
+    msg: String,
+    personInfo: {
+      // type: PersonType
+      type: Object as PropType<PersonInterface>,
+      required: true
+    }
   }
 })
 export default class HelloWorld extends Vue {
   msg!: string;
+  personInfo!: PersonInterface;
+
+  mounted() {
+    /**
+     * 实际上这么写一点用都没有，类型校验完全失败，因为并不能够约束父组件传值,但是控制台上面有警告
+     */
+    console.log(
+      "props:",
+      // this.personInfo.id.toFixed(),
+      typeof this.personInfo.id
+    );
+  }
 }
 </script>
 
