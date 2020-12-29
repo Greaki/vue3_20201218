@@ -7,7 +7,6 @@
       <button type="button" @click="increase">+1</button>
     </div>
     <input value="" @change="e => changePersonName(e.target.value)" />
-
     <h1 v-if="loading">loading......</h1>
     <img :src="result && result.message" alt="" v-else class="dog-img" />
     <hr />
@@ -24,18 +23,19 @@
         {{ item }}
       </div>
     </div>
-    <!-- <DefineComp :list="[1, 2, 3]" /> -->
+    <DefineComp @change="handleChange" :list="list" name="king" age="12">
+      <h1>this is slot</h1>
+    </DefineComp>
   </div>
 </template>
 
 <script lang="ts">
 import { ref } from "vue";
-import useMousePosition from "@/hooks/useMousePosition";
 import useAxios from "@/hooks/useAxios";
-import DefineComp, { DefineCompProps } from "@/components/DefineComp.vue";
 import "bootstrap/dist/css/bootstrap.min.css"; // 使用bootstrap的css
 import { DogInterface, getDogs } from "@/api/index";
-
+import useMousePosition from "@/hooks/useMousePosition";
+import DefineComp, { DefineCompProps } from "@/components/DefineComp.vue";
 
 export interface PersonInterface {
   name: string;
@@ -52,9 +52,7 @@ export default {
       testData: []
     };
   },
-  mounted() {
-    // console.log("-----", this.testData);
-  },
+  mounted() {},
   setup() {
     // console.log("执行setup函数");
     const count = ref<number>(1);
@@ -62,6 +60,23 @@ export default {
     const person = ref<PersonInterface>({
       name: "river",
       age: 18
+    });
+    const list = ref<DefineCompProps[]>([
+      {
+        id: 1,
+        name: "river",
+        gender: "male"
+      },
+      {
+        id: 2,
+        name: "king",
+        gender: "female"
+      }
+    ]);
+    list.value.push({
+      id: 3,
+      name: "javk",
+      gender: "female"
     });
     const changePersonName = (name: string) => {
       person.value.name = name;
@@ -95,8 +110,14 @@ export default {
       loading,
       error,
       dogSrc,
-      getDogImg
+      getDogImg,
+      list
     };
+  },
+  methods: {
+    handleChange<T>(value: T) {
+      console.log("执行了emit", value);
+    }
   }
 };
 </script>
