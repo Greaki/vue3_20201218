@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div :class="$style.home" class="main">
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld
       :msg="1111"
@@ -22,3 +22,15 @@ import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 })
 export default class Home extends Vue {}
 </script>
+
+<style module>
+.home {
+  background: yellow;
+}
+</style>
+
+<style scoped>
+.main {
+  color: red;
+}
+</style>

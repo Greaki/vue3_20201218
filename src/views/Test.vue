@@ -26,6 +26,8 @@
     <DefineComp @change="handleChange" :list="list" name="king" age="12">
       <h1>this is slot</h1>
     </DefineComp>
+
+    <css-var :height="20"></css-var>
   </div>
 </template>
 
@@ -36,6 +38,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // 使用bootstrap的css
 import { DogInterface, getDogs } from "@/api/index";
 import useMousePosition from "@/hooks/useMousePosition";
 import DefineComp, { DefineCompProps } from "@/components/DefineComp.vue";
+import CssVar from "@/components/CssVar.vue";
 
 export interface PersonInterface {
   name: string;
@@ -45,6 +48,7 @@ export interface PersonInterface {
 export default {
   name: "Test",
   components: {
+    CssVar,
     DefineComp
   },
   data() {
@@ -52,7 +56,7 @@ export default {
       testData: []
     };
   },
-  mounted() {},
+  // mounted() {},
   setup() {
     // console.log("执行setup函数");
     const count = ref<number>(1);
